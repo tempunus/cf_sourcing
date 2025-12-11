@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Pesquisar Projetos - China Fácil{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-search"></i> Pesquisar Projetos</h1>
+        <p class="mb-0">Busque por CF, Cliente ou filtre por data de atualização</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card table-custom mb-4">
+            <div class="card-header card-header-custom">
+                <h5 class="mb-0">FILTROS DE PESQUISA</h5>
+            </div>
+            <div class="card-body">
+                <form method="get">
+                    {% crispy form %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if projetos %}
+<div class="row">
+    <div class="col-12">
+        <div class="card table-custom">
+            <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">RESULTADOS DA PESQUISA</h5>
+                <span class="badge bg-light text-dark">{{ total_resultados }} resultado(s)</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>CF</th>
+                                <th>Cliente</th>
+                                <th>Plataforma</th>
+                                <th>Fornecedor</th>
+                                <th>Status</th>
+                                <th>Última Atualização</th>
+                                <th>Operador</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for projeto in projetos %}
+                            <tr>
+                                <td><strong>{{ projeto.cf_codigo }}</strong></td>
+                                <td>{{ projeto.cliente }}</td>
+                                <td>{{ projeto.get_plataforma_display }}</td>
+                                <td>{{ projeto.fornecedor|default:"N/A" }}</td>
+                                <td>
+                                    <span class="badge badge-status-{{ projeto.get_status_display_class }}">
+                                        {{ projeto.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>{{ projeto.data_atualizacao|date:"d/m/Y H:i" }}</td>
+                                <td>{{ projeto.operador.first_name|default:projeto.operador.username }}</td>
+                                <td>
+                                    <a href="{% url 'projeto_detalhe' projeto.pk %}" class="btn btn-sm btn-info" title="Ver detalhes">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'projeto_editar' projeto.pk %}" class="btn btn-sm btn-warning" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% elif request.GET %}
+<div class="alert alert-info text-center">
+    <i class="fas fa-info-circle"></i> Nenhum projeto encontrado com os filtros aplicados.
+</div>
+{% endif %}
+{% endblock %}

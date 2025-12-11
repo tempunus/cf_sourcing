@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Todos os Projetos - China Fácil{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-list"></i> Todos os Projetos</h1>
+        <p class="mb-0">Lista completa de projetos cadastrados</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card table-custom">
+            <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">LISTA DE PROJETOS</h5>
+                <a href="{% url 'projeto_criar' %}" class="btn btn-light btn-sm">
+                    <i class="fas fa-plus"></i> Novo Projeto
+                </a>
+            </div>
+            <div class="card-body">
+                {% if projetos %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="min-width: 100px;">CF</th>
+                                <th style="min-width: 150px;">Cliente</th>
+                                <th class="d-none d-md-table-cell">Plataforma</th>
+                                <th class="d-none d-lg-table-cell">Fornecedor</th>
+                                <th>Status</th>
+                                <th class="d-none d-xl-table-cell">Atualização</th>
+                                <th class="d-none d-md-table-cell">Operador</th>
+                                <th style="min-width: 100px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for projeto in projetos %}
+                            <tr>
+                                <td><strong>{{ projeto.cf_codigo }}</strong></td>
+                                <td>
+                                    {{ projeto.cliente }}
+                                    <div class="d-md-none text-muted small">{{ projeto.get_plataforma_display }}</div>
+                                </td>
+                                <td class="d-none d-md-table-cell">{{ projeto.get_plataforma_display }}</td>
+                                <td class="d-none d-lg-table-cell">{{ projeto.fornecedor|default:"-" }}</td>
+                                <td>
+                                    <span class="badge badge-status-{{ projeto.get_status_display_class }}">
+                                        {{ projeto.get_status_display }}
+                                    </span>
+                                    <div class="d-xl-none text-muted small mt-1">{{ projeto.data_atualizacao|date:"d/m/Y" }}</div>
+                                </td>
+                                <td class="d-none d-xl-table-cell">{{ projeto.data_atualizacao|date:"d/m/Y H:i" }}</td>
+                                <td class="d-none d-md-table-cell">{{ projeto.operador.first_name|default:projeto.operador.username }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'projeto_detalhe' projeto.pk %}" class="btn btn-info text-white" title="Ver">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{% url 'projeto_editar' projeto.pk %}" class="btn btn-warning text-dark" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-folder-open" style="font-size: 4rem; color: #ccc;"></i>
+                    <p class="mt-3 text-muted">Nenhum projeto cadastrado ainda.</p>
+                    <a href="{% url 'projeto_criar' %}" class="btn btn-primary-custom">
+                        <i class="fas fa-plus"></i> Criar Primeiro Projeto
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

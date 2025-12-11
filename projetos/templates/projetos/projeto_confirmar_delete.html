@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Deletar Projeto - China Fácil{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-trash"></i> Deletar Projeto</h1>
+        <p class="mb-0">Confirme a exclusão do projeto</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card table-custom">
+            <div class="card-header card-header-custom">
+                <h5 class="mb-0">CONFIRMAÇÃO DE EXCLUSÃO</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Atenção!</strong> Esta ação não pode ser desfeita.
+                </div>
+                
+                <p class="fs-5">Você tem certeza que deseja deletar o projeto:</p>
+                <div class="p-3 mb-4" style="background-color: #f8f9fa; border-radius: 8px;">
+                    <p class="mb-2"><strong>CF:</strong> {{ projeto.cf_codigo }}</p>
+                    <p class="mb-0"><strong>Cliente:</strong> {{ projeto.cliente }}</p>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Sim, deletar projeto
+                    </button>
+                    <a href="{% url 'projeto_detalhe' projeto.pk %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Todos os Acessos - China Fácil{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-users"></i> Todos os Acessos</h1>
+        <p class="mb-0">Histórico completo de acessos de todos os usuários</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card table-custom">
+            <div class="card-header card-header-custom">
+                <h5 class="mb-0">HISTÓRICO COMPLETO DE ACESSOS</h5>
+            </div>
+            <div class="card-body">
+                {% if acessos %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <th>Data/Hora Login</th>
+                                <th>Data/Hora Logout</th>
+                                <th>Duração</th>
+                                <th>Endereço IP</th>
+                                <th>Localização</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for acesso in acessos %}
+                            <tr>
+                                <td><strong>{{ acesso.usuario.first_name }} {{ acesso.usuario.last_name }}</strong><br>
+                                    <small class="text-muted">@{{ acesso.usuario.username }}</small>
+                                </td>
+                                <td>{{ acesso.data_login|date:"d/m/Y H:i:s" }}</td>
+                                <td>
+                                    {% if acesso.data_logout %}
+                                        {{ acesso.data_logout|date:"d/m/Y H:i:s" }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ acesso.duracao_sessao }}</td>
+                                <td>{{ acesso.ip_address|default:"N/A" }}</td>
+                                <td>{{ acesso.localizacao|default:"N/A" }}</td>
+                                <td>
+                                    {% if acesso.sessao_ativa %}
+                                        <span class="badge bg-success">Ativa</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Encerrada</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-history" style="font-size: 4rem; color: #ccc;"></i>
+                    <p class="mt-3 text-muted">Nenhum acesso registrado.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

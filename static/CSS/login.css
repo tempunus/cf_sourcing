@@ -1,0 +1,103 @@
+:root {
+    --primary-red: #b40404;
+    --dark-red: #f70303;
+    --black: #000000;
+    --white: #FFFFFF;
+    --light-gray: #F5F5F5;
+}
+
+body {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--white) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background-color: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    max-width: 450px;
+    width: 100%;
+}
+
+.login-header {
+    background: linear-gradient(135deg, var(--black) 20%, var(--dark-red) 100%);
+    color: var(--white);
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.login-header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.login-body {
+    padding: 40px 30px;
+}
+
+.btn-login {
+    background-color: var(--dark-red);
+    border-color: var(--primary-red);
+    color: var(--white);
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.btn-login:hover {
+    background-color: var(--dark-red);
+    border-color: var(--dark-red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+}
+
+.form-control:focus {
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 0.2rem rgba(200, 16, 46, 0.25);
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.register-link a {
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+.logo-icon {
+    font-size: 20;
+    margin-bottom: 15px;
+}
+
+.logo-img {
+    width: 250px;  
+    height: auto;
+}
